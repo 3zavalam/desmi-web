@@ -85,21 +85,55 @@ tabs.forEach((t) => t.addEventListener("click", () => selectPart(t.dataset.part)
 parts.forEach((g) => g.addEventListener("click", () => selectPart(g.dataset.part)));
 selectPart("float");
 
-// Video del sargazo: se reproduce solo cuando está a la vista.
-// Si el navegador bloquea la reproducción automática, se muestran los controles.
-const video = document.querySelector(".video-frame video");
-if (video) {
-  const showControls = () => (video.controls = true);
-  // Solo si falla la última fuente (el navegador prueba WebM y luego MP4)
-  video.querySelector("source:last-of-type")?.addEventListener("error", showControls);
-  new IntersectionObserver(
-    ([entry]) => {
-      if (!entry.isIntersecting) return video.pause();
-      if (video.controls) return;
-      video.play().catch(showControls);
-    },
-    { threshold: 0.3 },
-  ).observe(video);
+// Intro: el video del sargazo a pantalla completa. Al terminar (o con "Entrar") se
+// desvanece y queda la página. Si el video no puede reproducirse, se salta.
+const intro = document.getElementById("intro");
+const introVideo = intro?.querySelector("video");
+const introBar = intro?.querySelector(".intro-bar span");
+const INTRO_SPEED = 1.5;
+let introTimer;
+let introStarted = false;
+
+function closeIntro() {
+  if (!document.documentElement.classList.contains("has-intro")) return;
+  clearTimeout(introTimer);
+  intro.classList.add("out");
+  try {
+    sessionStorage.setItem("intro-vista", "1");
+  } catch (e) {}
+  setTimeout(() => {
+    document.documentElement.classList.remove("has-intro");
+    intro.classList.remove("out");
+    introVideo.pause();
+  }, 700);
+}
+
+function playIntro() {
+  document.documentElement.classList.add("has-intro");
+  introStarted = false;
+  introVideo.currentTime = 0;
+  introVideo.playbackRate = INTRO_SPEED;
+  // Si en 6 s no empezó (autoplay bloqueado, sin códec, red muy lenta), se entra a la página
+  introTimer = setTimeout(() => introStarted || closeIntro(), 6000);
+  introVideo.play().catch(closeIntro);
+}
+
+if (intro && introVideo) {
+  introVideo.addEventListener("ended", closeIntro);
+  introVideo.addEventListener("playing", () => (introStarted = true));
+  introVideo.addEventListener("ratechange", () => {
+    if (introVideo.playbackRate !== INTRO_SPEED) introVideo.playbackRate = INTRO_SPEED;
+  });
+  introVideo.addEventListener("timeupdate", () => {
+    if (introVideo.duration) introBar.style.width = `${(introVideo.currentTime / introVideo.duration) * 100}%`;
+  });
+  introVideo.querySelector("source:last-of-type")?.addEventListener("error", closeIntro);
+  intro.querySelector(".intro-skip").addEventListener("click", closeIntro);
+  document.addEventListener("keydown", (e) => e.key === "Escape" && closeIntro());
+  document.querySelector("[data-replay]")?.addEventListener("click", playIntro);
+
+  if (document.documentElement.classList.contains("has-intro")) playIntro();
+  else introVideo.preload = "none";
 }
 
 // WhatsApp: enlaces y botón flotante

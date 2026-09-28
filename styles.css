@@ -253,6 +253,112 @@ h3 {
   color: rgb(243 246 248 / 0.8);
 }
 
+/* Intro: video a pantalla completa al abrir la página */
+
+.intro {
+  display: none;
+}
+
+.has-intro body {
+  overflow: hidden;
+}
+
+.has-intro .intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: block;
+  background: #000;
+  transition: opacity 700ms ease, visibility 700ms ease;
+}
+
+.intro.out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.intro-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.intro-top {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding: 1.25rem;
+  background: linear-gradient(rgb(0 0 0 / 0.75), transparent);
+}
+
+.intro-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.intro-brand img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.intro-caption {
+  color: var(--sea);
+}
+
+.intro-skip {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 2.5rem;
+  min-height: 2.75rem;
+  padding: 0 1.2rem;
+  border: 1px solid rgb(255 255 255 / 0.35);
+  background: rgb(0 0 0 / 0.35);
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+.intro-skip:hover {
+  background: var(--foam);
+  border-color: var(--foam);
+  color: var(--ink);
+}
+
+.intro-bar {
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: rgb(255 255 255 / 0.12);
+}
+
+.intro-bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--sea);
+}
+
+.head-side .replay {
+  margin-top: 1.25rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--line);
+  color: var(--sea);
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.head-side .replay:hover {
+  border-color: var(--foam);
+  color: var(--foam);
+}
+
 /* ECE en números */
 
 .stats {
@@ -291,17 +397,24 @@ h3 {
   border-bottom: 1px solid var(--line);
 }
 
+/* 5 arriba y 4 abajo, centrados: rejilla de 10 columnas, cada logo ocupa 2 */
 .logo-wall {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem 2.5rem;
-  margin-top: 1.75rem;
+  justify-items: center;
+  gap: 2.25rem 1rem;
+  margin-top: 2rem;
 }
 
-/* Mismo "peso visual" para todos: los anchos crecen con la proporción,
-   los altos se limitan para que los logos cuadrados no dominen. */
+.logo-wall li {
+  grid-column: span 2;
+}
+
+.logo-wall li:nth-child(6) {
+  grid-column: 2 / span 2;
+}
+
 .logo-wall img {
   width: auto;
   height: 3rem;
@@ -318,11 +431,25 @@ h3 {
 
 @media (max-width: 767px) {
   .logo-wall {
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
     gap: 1.75rem 1rem;
   }
+
+  .logo-wall li,
+  .logo-wall li:nth-child(6) {
+    grid-column: auto;
+  }
+
+  /* En celular (3 x 3): Hard Rock arriba al centro y Mayakoba en el centro */
+  .logo-wall li:nth-child(1) { order: 1; }
+  .logo-wall li:nth-child(7) { order: 2; }
+  .logo-wall li:nth-child(2) { order: 3; }
+  .logo-wall li:nth-child(4) { order: 4; }
+  .logo-wall li:nth-child(3) { order: 5; }
+  .logo-wall li:nth-child(5) { order: 6; }
+  .logo-wall li:nth-child(6) { order: 7; }
+  .logo-wall li:nth-child(8) { order: 8; }
+  .logo-wall li:nth-child(9) { order: 9; }
 
   .logo-wall img {
     height: 2.4rem;
@@ -332,24 +459,6 @@ h3 {
 }
 
 /* Sargazo */
-
-.video-frame {
-  margin-top: 3rem;
-  border: 1px solid var(--line);
-  padding: 1px;
-}
-
-.video-frame video {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #000;
-}
-
-.legend-note {
-  margin-top: 0.75rem;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
 
 .figures {
   margin-top: 3rem;
@@ -853,14 +962,13 @@ path.flow {
   margin-top: 4.5rem;
 }
 
-.collect-media {
-  display: grid;
-  gap: 1px;
-  background: var(--line);
-  align-content: start;
+/* Collage: foto grande y el equipo en una tarjeta encimada en la esquina */
+.collage {
+  position: relative;
+  padding-bottom: 4rem;
 }
 
-.collect-media figure {
+.collage figure {
   position: relative;
   overflow: hidden;
 }
@@ -871,26 +979,36 @@ path.flow {
   object-fit: cover;
 }
 
-.collect-product {
-  background: #eef1f3;
-}
-
-.collect-product img {
-  width: 100%;
-  max-width: 26rem;
-  margin-inline: auto;
-  aspect-ratio: 640 / 440;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-}
-
-.collect-media figcaption {
+.collect-photo figcaption {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   background: rgb(6 8 11 / 0.7);
   padding: 0.6rem 0.9rem;
   color: var(--foam);
+}
+
+.collect-product {
+  position: absolute !important;
+  right: 1rem;
+  bottom: 0;
+  width: 46%;
+  background: #eef1f3;
+  box-shadow: 0 18px 40px rgb(0 0 0 / 0.45);
+}
+
+.collect-product img {
+  width: 100%;
+  aspect-ratio: 640 / 400;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  padding: 0.5rem 0.75rem 0;
+}
+
+.collect-product figcaption {
+  padding: 0.35rem 0.8rem 0.7rem;
+  color: #3a4450;
+  font-size: 0.62rem;
 }
 
 .collect-copy h3 {
@@ -1264,7 +1382,8 @@ path.flow {
     grid-column: span 7;
   }
 
-  .sistema-head p {
+  .sistema-head > p,
+  .sistema-head > .head-side {
     grid-column: 9 / span 4;
   }
 
@@ -1338,7 +1457,13 @@ path.flow {
 
   .collect {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    align-items: stretch;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .collect-product {
+    right: -2rem;
+    width: 42%;
   }
 
   .contact-grid {

@@ -16,8 +16,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500&display=swap" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Intro: una vez por sesión y solo si el usuario no pidió reducir movimiento
+    try {
+      if (!sessionStorage.getItem("intro-vista") && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("has-intro");
+      }
+    } catch (e) {}
+  </script>
 </head>
 <body>
+  <div class="intro" id="intro" role="dialog" aria-label="Animación: el sargazo en el Atlántico de 2010 a 2023">
+    <video class="intro-video" muted playsinline preload="auto" poster="video/sargazo-poster.jpg">
+      <source src="video/sargazo.webm" type="video/webm" />
+      <source src="video/sargazo.mp4" type="video/mp4" />
+    </video>
+    <div class="intro-top">
+      <div class="intro-brand">
+        <img src="logo.png" alt="" width="32" height="32" />
+        <span>ECE Corporativo</span>
+      </div>
+      <p class="intro-caption mono">Sargazo en el Atlántico · julio de cada año, 2010–2023 · NASA</p>
+    </div>
+    <button type="button" class="intro-skip mono">Entrar →</button>
+    <div class="intro-bar" aria-hidden="true"><span></span></div>
+  </div>
+
   <header class="header">
     <div class="wrap header-bar">
       <a href="#inicio" class="brand">
@@ -84,35 +108,30 @@
     <section class="wrap clients" aria-label="Clientes">
       <p class="mono sea">Hemos trabajado con</p>
       <ul class="logo-wall">
-        <li><img src="logos/mayakoba.png" alt="Mayakoba" width="399" height="95" loading="lazy" style="--ar: 4.20" /></li>
-        <li><img src="logos/hard-rock.png" alt="Hard Rock Hotel" width="403" height="242" loading="lazy" style="--ar: 1.67" /></li>
         <li><img src="logos/palladium.png" alt="Palladium Hotels &amp; Resorts" width="403" height="231" loading="lazy" style="--ar: 1.74" /></li>
         <li><img src="logos/bahia-principe.png" alt="Bahia Principe Clubs &amp; Resorts" width="403" height="199" loading="lazy" style="--ar: 2.03" /></li>
+        <li><img src="logos/mayakoba.png" alt="Mayakoba" width="399" height="95" loading="lazy" style="--ar: 4.20" /></li>
         <li><img src="logos/excellence.png" alt="Excellence Riviera Cancun" width="416" height="167" loading="lazy" style="--ar: 2.49" /></li>
         <li><img src="logos/zoetry.png" alt="Zoëtry Wellness &amp; Spa Resorts" width="403" height="272" loading="lazy" style="--ar: 1.48" /></li>
         <li><img src="logos/ocean-coral-turquesa.png" alt="Ocean Coral &amp; Turquesa" width="417" height="271" loading="lazy" style="--ar: 1.54" /></li>
+        <li><img src="logos/hard-rock.png" alt="Hard Rock Hotel" width="403" height="242" loading="lazy" style="--ar: 1.67" /></li>
         <li><img src="logos/grand-sirenis.png" alt="Grand Sirenis Hotels &amp; Resorts" width="506" height="228" loading="lazy" style="--ar: 2.22" /></li>
-        <li><img src="logos/inna.png" alt="Inna Resort &amp; Spa" width="420" height="442" loading="lazy" style="--ar: 0.95" /></li>
+        <li><img src="logos/inna.png" alt="Inna Beach Condos &amp; Hotel, Puerto Morelos" width="329" height="370" loading="lazy" style="--ar: 0.89" /></li>
       </ul>
     </section>
 
     <section id="sargazo" class="wrap section alt">
       <div class="sistema-head">
         <h2>Un cinturón<br />que antes no estaba.</h2>
-        <p>
-          Promedio de sargazo en el Atlántico cada julio, de 2010 a 2023, visto por los
-          satélites MODIS de la NASA. En 2010 casi no hay. Desde 2011 se forma una franja
-          de África al Caribe que regresa casi cada año.
-        </p>
+        <div class="head-side">
+          <p>
+            En 2010 casi no había. Desde 2011 se forma en el Atlántico una franja de sargazo
+            que va de África al Caribe y regresa casi cada año. En 2025 rompió récord.
+          </p>
+          <button type="button" class="replay mono" data-replay>↺ Ver la animación</button>
+        </div>
       </div>
 
-      <div class="ticks video-frame">
-        <video muted loop playsinline preload="metadata" poster="video/sargazo-poster.jpg" aria-label="Animación: promedio de sargazo en el Atlántico cada julio, 2010 a 2023">
-          <source src="video/sargazo.webm" type="video/webm" />
-          <source src="video/sargazo.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <p class="legend-note">Escala del video: km² cubiertos de sargazo por celda de 0.5° (unos 3,000 km²), de 0 a 9 o más.</p>
 
       <div class="figures">
         <div class="figures-grid">
@@ -773,7 +792,7 @@
       </ol>
 
       <div class="collect">
-        <div class="collect-media">
+        <div class="collect-media collage">
           <figure class="collect-photo">
             <img src="photos/recolector-uso.jpg" alt="Unidad de recolección DESMI trabajando: la banda saca el sargazo del agua" loading="lazy" />
             <figcaption class="mono">En operación</figcaption>
