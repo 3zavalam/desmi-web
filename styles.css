@@ -140,8 +140,7 @@ h3 {
   border-radius: 50%;
 }
 
-.nav,
-.write {
+.nav {
   display: none;
 }
 
@@ -177,10 +176,6 @@ h3 {
 .nav-link:hover::after,
 .nav-link.active::after {
   transform: scaleX(1);
-}
-
-.write {
-  color: var(--sea);
 }
 
 .menu-btn {
@@ -1301,10 +1296,6 @@ path.flow {
 
   .nav {
     display: flex;
-  }
-
-  .write {
-    display: inline;
   }
 
   .menu-btn,
