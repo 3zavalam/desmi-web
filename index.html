@@ -16,32 +16,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@300;400;500&display=swap" />
   <link rel="stylesheet" href="styles.css" />
-  <script>
-    // Intro: una vez por sesión y solo si el usuario no pidió reducir movimiento
-    try {
-      if (!sessionStorage.getItem("intro-vista") && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        document.documentElement.classList.add("has-intro");
-      }
-    } catch (e) {}
-  </script>
 </head>
 <body>
-  <div class="intro" id="intro" role="dialog" aria-label="Animación: el sargazo en el Atlántico de 2010 a 2023">
-    <video class="intro-video" muted playsinline preload="auto" poster="video/sargazo-poster.jpg">
-      <source src="video/sargazo.webm" type="video/webm" />
-      <source src="video/sargazo.mp4" type="video/mp4" />
-    </video>
-    <div class="intro-top">
-      <div class="intro-brand">
-        <img src="logo.png" alt="" width="32" height="32" />
-        <span>ECE Corporativo</span>
-      </div>
-      <p class="intro-caption mono">Sargazo en el Atlántico · julio de cada año, 2010–2023 · NASA</p>
-    </div>
-    <button type="button" class="intro-skip mono">Entrar →</button>
-    <div class="intro-bar" aria-hidden="true"><span></span></div>
-  </div>
-
   <header class="header">
     <div class="wrap header-bar">
       <a href="#inicio" class="brand">
@@ -128,10 +104,46 @@
             En 2010 casi no había. Desde 2011 se forma en el Atlántico una franja de sargazo
             que va de África al Caribe y regresa casi cada año. En 2025 rompió récord.
           </p>
-          <button type="button" class="replay mono" data-replay>↺ Ver la animación</button>
         </div>
       </div>
 
+
+      <!-- Carrusel infinito: la segunda copia (aria-hidden) hace que el giro no tenga corte -->
+      <div class="years" aria-label="Sargazo en el Atlántico cada julio, de 2010 a 2023">
+        <div class="years-track">
+          <figure class="year-card"><img src="photos/anios/2010.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2010" width="960" height="545" loading="lazy" /><figcaption class="mono">2010</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2011.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2011" width="960" height="545" loading="lazy" /><figcaption class="mono">2011</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2012.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2012" width="960" height="545" loading="lazy" /><figcaption class="mono">2012</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2013.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2013" width="960" height="545" loading="lazy" /><figcaption class="mono">2013</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2014.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2014" width="960" height="545" loading="lazy" /><figcaption class="mono">2014</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2015.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2015" width="960" height="545" loading="lazy" /><figcaption class="mono">2015</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2016.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2016" width="960" height="545" loading="lazy" /><figcaption class="mono">2016</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2017.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2017" width="960" height="545" loading="lazy" /><figcaption class="mono">2017</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2018.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2018" width="960" height="545" loading="lazy" /><figcaption class="mono">2018</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2019.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2019" width="960" height="545" loading="lazy" /><figcaption class="mono">2019</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2020.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2020" width="960" height="545" loading="lazy" /><figcaption class="mono">2020</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2021.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2021" width="960" height="545" loading="lazy" /><figcaption class="mono">2021</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2022.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2022" width="960" height="545" loading="lazy" /><figcaption class="mono">2022</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2023.jpg" alt="Mapa de sargazo en el Atlántico, julio de 2023" width="960" height="545" loading="lazy" /><figcaption class="mono">2023</figcaption></figure>
+          <div class="years-dup" aria-hidden="true">
+          <figure class="year-card"><img src="photos/anios/2010.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2010</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2011.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2011</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2012.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2012</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2013.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2013</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2014.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2014</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2015.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2015</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2016.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2016</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2017.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2017</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2018.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2018</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2019.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2019</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2020.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2020</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2021.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2021</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2022.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2022</figcaption></figure>
+          <figure class="year-card"><img src="photos/anios/2023.jpg" alt="" width="960" height="545" loading="lazy" /><figcaption class="mono">2023</figcaption></figure>
+          </div>
+        </div>
+      </div>
+      <p class="legend-note">Sargazo en el Atlántico cada julio, 2010–2023. Imágenes satelitales MODIS · NASA.</p>
 
       <div class="figures">
         <div class="figures-grid">

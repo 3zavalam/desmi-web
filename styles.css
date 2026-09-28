@@ -253,110 +253,76 @@ h3 {
   color: rgb(243 246 248 / 0.8);
 }
 
-/* Intro: video a pantalla completa al abrir la página */
+/* Carrusel infinito de mapas por año */
 
-.intro {
-  display: none;
-}
-
-.has-intro body {
+.years {
+  width: 100vw;
+  margin: 3rem calc(50% - 50vw) 0;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
 }
 
-.has-intro .intro {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: block;
-  background: #000;
-  transition: opacity 700ms ease, visibility 700ms ease;
+.years-track,
+.years-dup {
+  display: flex;
+  gap: 1rem;
 }
 
-.intro.out {
-  opacity: 0;
-  visibility: hidden;
+/* El padding iguala el hueco final, así -50% cae justo al inicio de la copia */
+.years-track {
+  width: max-content;
+  padding-right: 1rem;
+  animation: years 70s linear infinite;
 }
 
-.intro-video {
-  position: absolute;
-  inset: 0;
+.years:hover .years-track {
+  animation-play-state: paused;
+}
+
+.year-card {
+  flex: none;
+  width: clamp(15rem, 28vw, 25rem);
+}
+
+.year-card img {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.intro-top {
-  position: absolute;
-  inset: 0 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1.5rem;
-  padding: 1.25rem;
-  background: linear-gradient(rgb(0 0 0 / 0.75), transparent);
-}
-
-.intro-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.875rem;
-}
-
-.intro-brand img {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-}
-
-.intro-caption {
-  color: var(--sea);
-}
-
-.intro-skip {
-  position: absolute;
-  right: 1.25rem;
-  bottom: 2.5rem;
-  min-height: 2.75rem;
-  padding: 0 1.2rem;
-  border: 1px solid rgb(255 255 255 / 0.35);
-  background: rgb(0 0 0 / 0.35);
-  transition: background 180ms ease, border-color 180ms ease;
-}
-
-.intro-skip:hover {
-  background: var(--foam);
-  border-color: var(--foam);
-  color: var(--ink);
-}
-
-.intro-bar {
-  position: absolute;
-  inset: auto 0 0;
-  height: 3px;
-  background: rgb(255 255 255 / 0.12);
-}
-
-.intro-bar span {
-  display: block;
-  width: 0;
-  height: 100%;
-  background: var(--sea);
-}
-
-.head-side .replay {
-  margin-top: 1.25rem;
-  min-height: 2.75rem;
-  padding: 0 1rem;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   border: 1px solid var(--line);
-  color: var(--sea);
-  transition: border-color 180ms ease, color 180ms ease;
+  background: #000;
 }
 
-.head-side .replay:hover {
-  border-color: var(--foam);
-  color: var(--foam);
+.year-card figcaption {
+  margin-top: 0.6rem;
+  color: var(--sea);
+}
+
+.legend-note {
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+@keyframes years {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .years {
+    overflow-x: auto;
+  }
+
+  .years-track {
+    animation: none;
+  }
+
+  .years-dup {
+    display: none;
+  }
 }
 
 /* ECE en números */
