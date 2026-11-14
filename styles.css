@@ -1502,3 +1502,72 @@ path.flow {
     animation: none;
   }
 }
+
+/* Líneas de servicio (inicio) */
+
+.lines {
+  display: grid;
+  margin-block: 1rem 3rem;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.line-card {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  padding: 1.75rem 1.5rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--foam);
+  text-decoration: none;
+  transition: background 180ms ease;
+}
+
+.line-card:hover,
+.line-card:focus-visible {
+  background: var(--panel);
+}
+
+.line-card h3 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+
+.line-card p {
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.line-go {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--sea);
+}
+
+@media (min-width: 768px) {
+  .lines {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Selector de servicio en el formulario */
+
+.contact-form select {
+  width: 100%;
+  min-height: 2.9rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 0.7rem 0.8rem;
+  color: var(--foam);
+  font: 400 1rem/1.4 var(--sans);
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 0;
+}
+
+.contact-form select:focus {
+  outline: none;
+  border-color: var(--sea);
+}

@@ -19,7 +19,7 @@ mobileNav.querySelectorAll("a").forEach((a) => a.addEventListener("click", () =>
 
 // Resalta la sección visible en la navegación
 const links = document.querySelectorAll(".nav-link");
-const sections = ["sargazo", "sistema", "servicios", "costa", "preguntas", "contacto"]
+const sections = ["derrames", "limpieza", "sargazo", "sistema", "servicios", "costa", "preguntas", "contacto"]
   .map((id) => document.getElementById(id))
   .filter(Boolean);
 
@@ -91,7 +91,7 @@ const waUrl = (text = "") =>
 
 document.querySelectorAll("[data-wa]").forEach((el) => {
   if (WHATSAPP) {
-    el.href = waUrl("Hola, me interesa la barrera contra sargazo.");
+    el.href = waUrl("Hola, me interesa información sobre sus servicios.");
     el.target = "_blank";
     el.rel = "noopener";
     el.hidden = false;
@@ -122,8 +122,9 @@ if (form) {
     const lines = [
       ["Nombre", "nombre"],
       ["Hotel o empresa", "empresa"],
+      ["Servicio", "servicio"],
       ["Ubicación", "ubicacion"],
-      ["Metros de costa", "metros"],
+      ["Tamaño aproximado", "metros"],
       ["Teléfono", "telefono"],
       ["Correo", "correo"],
       ["Mensaje", "mensaje"],
@@ -131,12 +132,12 @@ if (form) {
       .map(([label, key]) => [label, String(data.get(key) || "").trim()])
       .filter(([, value]) => value)
       .map(([label, value]) => `${label}: ${value}`);
-    const text = `Solicitud de cotización, barrera contra sargazo\n\n${lines.join("\n")}`;
+    const text = `Solicitud de cotización · ${data.get("servicio")}\n\n${lines.join("\n")}`;
 
     if (event.submitter?.dataset.via === "wa" && WHATSAPP) {
       window.open(waUrl(text), "_blank", "noopener");
     } else {
-      const subject = `Cotización barrera sargazo · ${data.get("ubicacion")}`;
+      const subject = `Cotización ${data.get("servicio")} · ${data.get("ubicacion")}`;
       window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
     }
   });
