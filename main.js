@@ -1,8 +1,8 @@
 // Datos de contacto. WhatsApp con lada de país, sin espacios ni signos.
 // Si se deja vacío, los botones de WhatsApp no se muestran.
-const WHATSAPP = "13462743997";
-const WHATSAPP_VISIBLE = "+1 346 274 3997";
-const EMAIL = "ece.corporativo@prodigy.net.mx";
+const WHATSAPP = "529931175383";
+const WHATSAPP_VISIBLE = "+52 993 117 5383";
+const EMAIL = "ezavala@ece-corporativo.com";
 
 // Menú móvil
 const menuBtn = document.querySelector(".menu-btn");
